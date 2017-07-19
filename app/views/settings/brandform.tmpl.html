@@ -1,0 +1,45 @@
+<md-dialog aria-label="marcas" flex>
+  <form ng-cloak name="brandForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 ng-if="!brand.$id">Nueva Marca</h2>
+        <h2 ng-if="brand.$id">Editar Marca</h2>
+
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+       
+
+      <md-input-container class="md-block">
+        <label>Descripción</label>
+        <input md-maxlength="30" required md-no-asterisk name="description" ng-model="brand.description">
+        <div ng-messages="brandForm.description.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+          <div ng-message="md-maxlength">Debe contar con menos de 30 caracteres.</div>
+        </div>
+      </md-input-container>
+    
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+
+      <span flex></span>
+      <md-button class="md-raised md-primary md-ink-rippled" 
+      type="submit"
+  ng-disabled="brandForm.description.$dirty && brandForm.description.$invalid"
+      ng-click="save(brand)">
+       Guardar
+      </md-button>
+      <md-button class="md-raised md-ink-rippled" ng-click="cancel()">
+        Cancelar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

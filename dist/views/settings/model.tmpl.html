@@ -1,0 +1,62 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 ng-if="!status.$id">Nuevo Modelo</h2>
+        <h2 ng-if="status.$id">Editar Modelo</h2>
+
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form name="statusForm" ng-model="statusForm">
+        <md-input-container class="md-block">
+          <label>Marca</label>
+          <md-select ng-model="model.brand">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="brand in brands" ng-value="brand.$id" ng-disabled="$index === 1">
+              {{brand.description}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+      <md-input-container class="md-block">
+        <label>Descripción</label>
+        <input md-maxlength="30" required md-no-asterisk name="description" ng-model="status.description">
+        <div ng-messages="statusForm.description.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+          <div ng-message="md-maxlength">Debe contar con menos de 30 caracteres.</div>
+        </div>
+      </md-input-container>
+    <md-input-container class="md-block">
+        <label>Valor</label>
+        <input  required md-no-asterisk name="value" ng-model="status.value">
+        <div ng-messages="statusForm.description.$error">
+          <div ng-message="required">Este campo es requerido.</div>
+        </div>
+      </md-input-container>
+    </form>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+
+      <span flex></span>
+      <md-button class="md-raised md-primary md-ink-rippled" 
+      type="submit"
+  ng-disabled="statusForm.description.$dirty && statusForm.description.$invalid ||
+  statusForm.value.$dirty && statusForm.value.$invalid"
+      ng-click="save(status)">
+       Guardar
+      </md-button>
+      <md-button class="md-raised md-ink-rippled" ng-click="cancel()">
+        Cancelar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

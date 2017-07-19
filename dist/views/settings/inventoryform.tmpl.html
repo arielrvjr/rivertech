@@ -1,0 +1,98 @@
+<md-dialog aria-label="inventario" flex="100">
+    <form ng-cloak name="inventoryForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!inventory.$id">Nuevo Articulo</h2>
+                <h2 ng-if="inventory.$id">Editar Articulo</h2>
+
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content flex="100">
+            <div class="md-dialog-content" layout="column">
+
+                <md-input-container class="md-block">
+                    <label>Descripción</label>
+                    <input md-maxlength="30" required md-no-asterisk name="description" ng-model="inventory.description">
+                    <div ng-messages="inventoryForm.description.$error">
+                        <div ng-message="required">Este campo es requerido.</div>
+                        <div ng-message="md-maxlength">Debe contar con menos de 30 caracteres.</div>
+                    </div>
+                </md-input-container>
+                 <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Número de Placa</label>
+                    <input required md-no-asterisk name="badge" ng-model="inventory.badge">
+                    <div ng-messages="inventoryForm.badge.$error">
+                        <div ng-message="required">Este campo es requerido.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Categoria</label>
+                    <md-select required ng-model="inventory.category" name="category">
+                        <md-option value=""><em>None</em></md-option>
+                        <md-option ng-repeat="categoria in categorias" ng-value="categoria.$id">
+                            {{categoria.description}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Marca</label>
+                    <md-select required ng-model="inventory.brand" name="brand">
+                        <md-option value=""><em>None</em></md-option>
+                        <md-option ng-repeat="marca in marcas" ng-value="marca.$id">
+                            {{marca.description}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Modelo</label>
+                    <md-select required ng-model="inventory.model" name="model" ng-disabled="!inventory.brand">
+                        <md-option value=""><em>None</em></md-option>
+                        <md-option ng-repeat="modelo in modelos | filter: {'brand': inventory.brand }" ng-value="modelo.$id">
+                            {{modelo.description}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                </div>
+                <md-input-container class="md-block">
+                    <label>Número de Serie</label>
+                    <input md-no-asterisk name="serie" ng-model="inventory.serie">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Accesorios</label>
+                    <input md-no-asterisk name="accesories" ng-model="inventory.accesories">
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Estado</label>
+                    <md-select required ng-model="inventory.status" name="status">
+                        <md-option value=""><em>None</em></md-option>
+                        <md-option ng-repeat="estado in estados" ng-value="estado.$id">
+                            {{estado.description}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+
+            <span flex></span>
+            <md-button class="md-raised md-primary md-ink-rippled" type="submit" 
+            ng-disabled="inventoryForm.$invalid"
+                ng-click="save(inventory)">
+                Guardar
+            </md-button>
+            <md-button class="md-raised md-ink-rippled" ng-click="cancel()">
+                Cancelar
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
